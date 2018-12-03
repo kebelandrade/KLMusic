@@ -9,11 +9,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    // Hola papi
 
-        //ahjaksddsfa
     }
 }
-//hi guys how are you in this beautiful day XD
 
 //ctrl+k, para hacer commit, ctrl+t para hacer pull wjfjfos
