@@ -16,4 +16,4 @@ public class MainActivity extends AppCompatActivity {
 }
 //hi guys how are you in this beautiful day XD
 
-//ctrl+k, para hacer commit, ctrl+t para hacer pull
+//ctrl+k, para hacer commit, ctrl+t para hacer pull wjfjfos
