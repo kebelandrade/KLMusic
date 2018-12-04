@@ -12,5 +12,4 @@ public class MainActivity extends AppCompatActivity {
 
     }
 }
-//holaaa
 //ctrl+k, para hacer commit, ctrl+t para actualizar projecto, ctrl+shift+k para hacer el push
