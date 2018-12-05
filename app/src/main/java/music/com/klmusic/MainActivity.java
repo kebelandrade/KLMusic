@@ -10,6 +10,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
+
+
+
     }
 }
 //ctrl+k, para hacer commit, ctrl+t para actualizar projecto, ctrl+shift+k para hacer el push
