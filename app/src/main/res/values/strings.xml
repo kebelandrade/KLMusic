@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">KLmusic</string>
+    <string name="notif_musica">Control de Musica</string>
 </resources>
