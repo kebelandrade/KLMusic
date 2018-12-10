@@ -15,6 +15,14 @@ import android.net.Uri;
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.widget.ListView;
+import android.os.IBinder;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.view.MenuItem;
+import android.view.View;
+import music.com.klmusic.MusicService.MusicBinder;
 
 import static music.com.klmusic.R.id.song_list;
 
@@ -23,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
     public static final String CANAL_PRINCIPAL = "principal";
     private ArrayList<Song> songList;
     private ListView songView;
+    private MusicService musicSrv;
+    private Intent playIntent;
+    private boolean musicBound=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +55,46 @@ public class MainActivity extends AppCompatActivity {
         SongAdapter songAdt = new SongAdapter(this, songList);
         songView.setAdapter(songAdt);
 
+    }
+
+    private ServiceConnection musicConnection = new ServiceConnection(){
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            MusicService.MusicBinder binder = (MusicService.MusicBinder)service;
+            //get service
+            musicSrv = binder.getService();
+            //pass list
+            musicSrv.setList(songList);
+            musicBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            musicBound = false;
+        }
+    };
+
+    protected void onStart() {
+        super.onStart();
+        if(playIntent==null){
+            playIntent = new Intent(this, MusicService.class);
+            bindService(playIntent, musicConnection, Context.BIND_AUTO_CREATE);
+            startService(playIntent);
+        }
+    }
+
+    private final IBinder musicBind = new MusicBinder();
+
+
+    public IBinder onBind(Intent intent) {
+        return musicBind;
+    }
+
+    public boolean onUnbind(Intent intent){
+        player.stop();
+        player.release();
+        return false;
     }
 
     private void registrarCanalPrincipal() {
