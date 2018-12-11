@@ -7,7 +7,10 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
+import android.view.View;
 import android.widget.Toast;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import android.content.ContentUris;
 import android.media.AudioManager;
@@ -51,11 +54,27 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
         songs=theSongs;
     }
 
-    public class MusicBinder extends Binder {
+    public  class MusicBinder extends Binder {
         MusicService getService() {
             return MusicService.this;
         }
     }
+
+    //sobreescribi de aqui
+    @Override
+    public void onCompletion(MediaPlayer mp) {
+
+    }
+
+    @Override
+    public boolean onError(MediaPlayer mp, int what, int extra) {
+        return false;
+    }
+
+
+
+    //hasta aqui
+
 
     public void playSong(){
         player.reset();
@@ -67,6 +86,29 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
         Uri trackUri = ContentUris.withAppendedId(
                 android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
                 currSong);
+
+
+        try {
+            player.setDataSource(getApplicationContext(),trackUri);
+        } catch (Exception e) {
+            //e.printStackTrace();
+            Log.e("MUSIC SERVICE","Error setting data source",e);
+        }
+
+        player.prepareAsync();
+
+    }
+
+
+    @Override
+    public void onPrepared(MediaPlayer mp) {
+        //now we start playback
+        mp.start();
+    }
+
+
+    public void setSongs(int songIndex){
+        songPosn=songIndex;
     }
 
 
@@ -84,13 +126,25 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
         return super.onStartCommand(intent, flags, startId);
     }
 
+    private final IBinder musicBind = new MusicBinder();
+
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        return musicBind;
+    }
+
+
+    @Override
+    public boolean onUnbind(Intent intent){
+        player.stop();
+        player.release();
+        return false;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
     }
+
+
 }

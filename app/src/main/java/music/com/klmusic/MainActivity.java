@@ -1,5 +1,6 @@
 package music.com.klmusic;
 
+import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
@@ -22,11 +23,14 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.view.MenuItem;
 import android.view.View;
+
 import music.com.klmusic.MusicService.MusicBinder;
 
 import static music.com.klmusic.R.id.song_list;
 
-public class MainActivity extends AppCompatActivity {
+import android.widget.MediaController.MediaPlayerControl;
+
+public class MainActivity extends Activity implements MediaPlayerControl{
 
     public static final String CANAL_PRINCIPAL = "principal";
     private ArrayList<Song> songList;
@@ -39,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        songView = findViewById(song_list);
+      //  songView = findViewById(song_list);
+        songView = (ListView)findViewById(R.id.song_list);//agregue esto de la primera parte, obteermos la instancia de ListView usando song_list, que es el id que le dimos
         songList = new ArrayList<Song>();
         registrarCanalPrincipal();
         regis();
@@ -55,13 +60,16 @@ public class MainActivity extends AppCompatActivity {
         SongAdapter songAdt = new SongAdapter(this, songList);
         songView.setAdapter(songAdt);
 
+
+
+        setController();
     }
 
     private ServiceConnection musicConnection = new ServiceConnection(){
 
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            MusicService.MusicBinder binder = (MusicService.MusicBinder)service;
+            MusicBinder binder = (MusicBinder)service;
             //get service
             musicSrv = binder.getService();
             //pass list
@@ -84,18 +92,44 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private final IBinder musicBind = new MusicBinder();
+    //I guest this part goes in MusicService class
+
+//    private final IBinder musicBind = new MusicBinder();
+//
+//
+//    public IBinder onBind(Intent intent) {
+//        return musicBind;
+//    }
+
+//    public boolean onUnbind(Intent intent){
+//        player.stop();
+//        player.release();
+//        return false;
+//    }
+
+    //I guest this part goes in MusicService class
 
 
-    public IBinder onBind(Intent intent) {
-        return musicBind;
+    public void songPicked(View view){
+        musicSrv.setSongs(Integer.parseInt(view.getTag().toString()));
+        musicSrv.playSong();
     }
 
-    public boolean onUnbind(Intent intent){
-        player.stop();
-        player.release();
-        return false;
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.action_shuffle:
+                break;
+            case  R.id.action_end:
+                stopService(playIntent);
+                musicSrv=null;
+                System.exit(0);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
+
 
     private void registrarCanalPrincipal() {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -142,5 +176,77 @@ public class MainActivity extends AppCompatActivity {
             }
             while (musicCursor.moveToNext());
         }
+    }
+
+
+    private MusicController controller;
+
+    private void setController(){
+        controller = new MusicController(this);
+
+        controller.setMediaPlayer(this);
+        controller.setAnchorView(findViewById(R.id.song_list));
+        controller.setEnabled(true);
+    }
+
+
+    @Override
+    public void start() {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public int getDuration() {
+        return 0;
+    }
+
+    @Override
+    public int getCurrentPosition() {
+        return 0;
+    }
+
+    @Override
+    public void seekTo(int pos) {
+
+    }
+
+    @Override
+    public boolean isPlaying() {
+        return false;
+    }
+
+    @Override
+    public int getBufferPercentage() {
+        return 0;
+    }
+
+    @Override
+    public boolean canPause() {
+        return false;
+    }
+
+    @Override
+    public boolean canSeekBackward() {
+        return false;
+    }
+
+    @Override
+    public boolean canSeekForward() {
+        return false;
+    }
+
+    @Override
+    public int getAudioSessionId() {
+        return 0;
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
     }
 }

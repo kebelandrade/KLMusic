@@ -1,5 +1,6 @@
 package music.com.klmusic;
 
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -32,16 +33,16 @@ public class SongAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int arg0, View arg1, ViewGroup arg2) {
+    public View getView(int position, View convertView, ViewGroup parent) {
         //map to song layout
-        ViewGroup parent = arg2;
+        //ViewGroup parent = arg2;//quite esta parte porque debia ser enviado como parámetro
         LinearLayout songLay = (LinearLayout)songInf.inflate
                 (R.layout.song, parent, false);
         //get title and artist views
         TextView songView = (TextView)songLay.findViewById(R.id.song_title);
         TextView artistView = (TextView)songLay.findViewById(R.id.song_artist);
         //get song using position
-        int position = arg0;
+       // int position = arg0;//paso lo mismo que con el parent
         Song currSong = songs.get(position);
         //get title and artist strings
         songView.setText(currSong.getTitle());
@@ -55,4 +56,18 @@ public class SongAdapter extends BaseAdapter {
         songs=theSongs;
         songInf=LayoutInflater.from(c);
     }
+
+//
+//    public boolean onOptionsItemSelected(MenuItem item){
+//        switch (item.getItemId()){
+//            case R.id.action_shuffle:
+//                break;
+//
+//            case R.id.action_end:
+//
+//        }
+//
+//    return super.
+//    }
+
 }

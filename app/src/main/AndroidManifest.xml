@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         >
-        <service android:name="music.com.klmusic.MusicService"/>
+        <!--<service android:name="music.com.klmusic.MusicService"/>-->
 
         <activity
             android:name=".MainActivity"
@@ -26,6 +26,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service android:name="music.com.klmusic.MusicService"/>
+        <!--cambié esto de posicion-->
 
     </application>
 
