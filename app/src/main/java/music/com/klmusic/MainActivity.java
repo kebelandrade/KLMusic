@@ -60,9 +60,6 @@ public class MainActivity extends Activity implements MediaPlayerControl{
         SongAdapter songAdt = new SongAdapter(this, songList);
         songView.setAdapter(songAdt);
 
-
-
-        setController();
     }
 
     private ServiceConnection musicConnection = new ServiceConnection(){
@@ -179,14 +176,8 @@ public class MainActivity extends Activity implements MediaPlayerControl{
     }
 
 
-    private MusicController controller;
-
     private void setController(){
-        controller = new MusicController(this);
-
-        controller.setMediaPlayer(this);
-        controller.setAnchorView(findViewById(R.id.song_list));
-        controller.setEnabled(true);
+        
     }
 
 
@@ -250,3 +241,6 @@ public class MainActivity extends Activity implements MediaPlayerControl{
 
     }
 }
+
+
+//VAMOS A HACER QUE ESTO FUNCIONE
