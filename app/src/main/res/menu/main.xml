@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/action_shuffle"
         android:icon="@drawable/ic_shuffle_black_24dp"
         android:orderInCategory="1"
-        android:showAsAction="always"
-        android:title="Shuffle"/>
+        app:showAsAction="always"
+        android:title="Shuffle"
+
+         />
 
     <item
         android:id="@+id/action_end"
         android:icon="@drawable/ic_stop_black_24dp"
         android:orderInCategory="2"
-        android:showAsAction="always"
-        android:title="End"/>
+
+        app:showAsAction="always"
+        android:title="End"
+     />
 </menu>

@@ -57,7 +57,7 @@ public class SongAdapter extends BaseAdapter {
         songInf=LayoutInflater.from(c);
     }
 
-//
+
 //    public boolean onOptionsItemSelected(MenuItem item){
 //        switch (item.getItemId()){
 //            case R.id.action_shuffle:
@@ -67,7 +67,7 @@ public class SongAdapter extends BaseAdapter {
 //
 //        }
 //
-//    return super.
+//
 //    }
 
 }

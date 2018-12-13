@@ -1,15 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--esto era lo que tenia originalmente el proyecto-->
+
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:tools="http://schemas.android.com/tools"-->
+    <!--android:layout_width="fill_parent"-->
+    <!--android:layout_height="fill_parent"-->
+    <!--android:orientation="vertical"-->
+    <!--tools:context=".MainActivity">-->
+
+    <!--<ListView-->
+        <!--android:id="@+id/song_list"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="#FFF"/>-->
+
+<!--</LinearLayout>-->
+
+
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    android:background="#EEE"
+    tools:context=".MainActivity" >
+
+    <!--<ListView-->
+        <!--android:id="@+id/song_list"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="wrap_content" >-->
+    <!--</ListView>-->
+
+
 
     <ListView
-        android:id="@+id/song_list"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#FFF"/>
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp"
+        tools:ignore="MissingConstraints"
+
+
+        />
+
 
 </LinearLayout>
